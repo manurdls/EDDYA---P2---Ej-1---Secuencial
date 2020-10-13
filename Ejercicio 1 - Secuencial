@@ -1,0 +1,88 @@
+#include <iostream>
+#include <stdlib.h>
+using namespace std;
+class Pila{
+	private:
+		int *items;
+		int indexTop;
+		int maxSize;
+	public:
+		Pila(int maxSize = 10);    //si no se pasa como par�metro la cantidad maxima de elementos, por defecto son 10
+		int getSize() const;	   //devuelve la cantidad actual de elementos en la pila
+		bool getEmpty() const;     //devuelve True si la pila est� vacia
+		int getTop() const;	       //devuelve el valor del ultimo elemento agregado a la pila
+		void pushTop(int dat);      //agrega un elemento a la pila
+		void supTop();			   //elimina el elemento que est� en la posici�n top de la pila
+		void toShow();				//muestra la pila
+		~Pila();			       //es el destructor
+};
+
+Pila::Pila(int max){
+	indexTop = -1;
+	maxSize = max;
+	items = new int[max];
+}
+
+int Pila::getSize() const{
+	return indexTop + 1;
+}
+
+bool Pila::getEmpty() const{
+	return (indexTop == -1);
+}
+
+int Pila::getTop() const{
+	return items[indexTop];
+}
+
+void Pila::pushTop(int dat){
+	if(indexTop + 1 < maxSize)
+		items[++indexTop] = dat;
+}
+
+void Pila::supTop(){
+	if(!getEmpty())
+		indexTop--;
+}
+void Pila::toShow(void){
+	int i;
+	for (i=indexTop; i>=0; i--){
+		printf("%d\n", items[i]);
+	}
+}
+Pila::~Pila(){
+	delete[]items;
+}
+
+void test(Pila &unaPila){
+	unaPila.pushTop(33);
+	unaPila.pushTop(22);
+	unaPila.pushTop(1);
+	unaPila.pushTop(56);
+	if (unaPila.getEmpty())
+		printf("La lista esta vacia.");
+	else
+		cout<<"Valor del tope: "<<unaPila.getTop()<<"\nCantidad actual de elementos: "<<unaPila.getSize()<<endl;
+		
+	printf("--------------------------------\n");
+	unaPila.supTop();
+	unaPila.supTop();
+	if (unaPila.getEmpty())
+		printf("La lista esta vacia.");
+	else
+		cout<<"Valor del tope: "<<unaPila.getTop()<<"\nCantidad actual de elementos: "<<unaPila.getSize()<<endl;
+		
+	printf("--------------------------------\n");
+	unaPila.supTop();
+	unaPila.supTop();
+	if (unaPila.getEmpty())
+		puts("La pila esta vacia.");
+	else
+		cout<<"Valor del tope: "<<unaPila.getTop()<<"\nCantidad actual de elementos: "<<unaPila.getSize()<<endl;
+	
+}
+
+int main(){
+	Pila unaPila(4);
+	test(unaPila);
+}
